@@ -25,7 +25,13 @@ namespace Business.Concrete
         public void Delete(CarColor color)
         {
             _colorDal.Delete(color);
-            Console.WriteLine("carBrand: {0} deleted...", color.CarColorName);
+            Console.WriteLine("carColor: {0} deleted...", color.CarColorName);
+        }
+
+        public void DeleteByColorId(int colorId)
+        {
+            _colorDal.DeleteByFilter(p=>p.CarColorId == colorId);
+            Console.WriteLine("carColor with Id: {0} deleted...", colorId);
         }
 
         public List<CarColor> GetAll()

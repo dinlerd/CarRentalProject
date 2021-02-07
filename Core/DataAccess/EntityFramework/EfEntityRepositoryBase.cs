@@ -32,6 +32,17 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public void DeleteByFilter(Expression<Func<TEntity, bool>> filter)
+        {
+            using (TContext context = new TContext())
+            {
+                var entityToDelete = context.Set<TEntity>().SingleOrDefault(filter);
+                var deletedEntity = context.Entry(entityToDelete);
+                deletedEntity.State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             using (TContext context = new TContext())
