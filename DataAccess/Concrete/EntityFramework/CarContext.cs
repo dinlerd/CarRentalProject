@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,8 @@ namespace DataAccess.Concrete.EntityFramework
         }
 
         public DbSet<Car> Cars { get; set; }
-        public DbSet<CarBrand> CarBrands { get; set; }
-        public DbSet<Color> Colors { get; set; }
+        public DbSet<CarBrand> Brands { get; set; }
+        public DbSet<CarColor> Colors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +25,9 @@ namespace DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<CarBrand>().Property(p => p.CarBrandId).HasColumnName("BrandId");
             modelBuilder.Entity<CarBrand>().Property(p => p.CarBrandName).HasColumnName("BrandName");
 
+            modelBuilder.Entity<CarColor>().ToTable("Colors");
+            modelBuilder.Entity<CarColor>().Property(p => p.CarColorId).HasColumnName("ColorId");
+            modelBuilder.Entity<CarColor>().Property(p => p.CarColorName).HasColumnName("ColorName");
         }
     }
 }

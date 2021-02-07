@@ -30,11 +30,40 @@ namespace ConsoleUserInterface
             Console.WriteLine("List all cars: "); 
             productService.ListAll();*/
 
+            //CarTest();
+
+            //CarBrandTest();
+
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetCarDetails())
+            {
+                Console.WriteLine(car.CarDescription + " / " + car.BrandName + " / " + car.ColorName + " / " +car.DailyPrice);
+            }
+            
+
+        }
+
+        private static void CarBrandTest()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            CarBrand carBrand1 = new CarBrand() { CarBrandName = "OPEL" };
+            brandManager.Add(carBrand1);
+
+            foreach (var brand in brandManager.GetAll())
+            {
+                Console.WriteLine("{0} / {1} ", brand.CarBrandId, brand.CarBrandName);
+            }
+
+            brandManager.Delete(carBrand1);
+        }
+
+        private static void CarTest()
+        {
             CarManager carService = new CarManager(new EfCarDal());
-            Car car1 = new Car() { BrandId=1003,ColorId=3,ModelYear=2017,DailyPrice=10000,Description="Opel Corsa 1.3 CDTI"};
+            Car car1 = new Car() { BrandId = 1003, ColorId = 3, ModelYear = 2017, DailyPrice = 10000, Description = "Opel Corsa 1.3 CDTI" };
             carService.Add(car1);
             //carService.Delete(car1);
-            
+
 
             Console.WriteLine("------------------------");
             Console.WriteLine("All Cars: ");
@@ -49,20 +78,6 @@ namespace ConsoleUserInterface
                 Console.WriteLine(car.Description);
             }
             carService.Delete(car1);
-
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-            CarBrand carBrand1 = new CarBrand() { CarBrandName="OPEL"};
-            brandManager.Add(carBrand1);
-            
-            foreach (var brand in brandManager.GetAll())
-            {
-                Console.WriteLine("{0} / {1} " ,brand.CarBrandId,brand.CarBrandName);
-            }
-
-            brandManager.Delete(carBrand1);
-            
-            
-
         }
     }
 }

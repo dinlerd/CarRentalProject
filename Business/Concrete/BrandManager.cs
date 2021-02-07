@@ -32,5 +32,15 @@ namespace Business.Concrete
         {
             return _ibrandDal.GetAll();
         }
+
+        public CarBrand GetByBrandId(int brandID)
+        {
+            return _ibrandDal.Get(p => p.CarBrandId == brandID);
+        }
+
+        public void Update(CarBrand carBrand)
+        {
+            _ibrandDal.Update(carBrand);
+        }
     }
 }
