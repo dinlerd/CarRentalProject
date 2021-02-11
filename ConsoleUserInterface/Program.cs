@@ -15,11 +15,11 @@ namespace ConsoleUserInterface
 
             //CarTest();
 
-            //CarBrandTest();
+            CarBrandTest();
 
             //GetCarDetailsTest();
 
-            CarColorTest();
+            //CarColorTest();
 
         }
 
@@ -36,13 +36,14 @@ namespace ConsoleUserInterface
 
             //colorManager.Delete(new CarColor {CarColorId=1003, CarColorName="Green" });
             //colorManager.Delete(new CarColor { CarColorId = 2004, CarColorName = "Green" });
-            colorManager.DeleteByColorId(3003);
+            //colorManager.DeleteByColorId(3003);
             Console.WriteLine("---------------------------------------");
             foreach (var color in colorManager.GetAll())
             {
                 Console.WriteLine("Color Id: " + color.CarColorId + " Color Name: " + color.CarColorName);
             }
             //Console.WriteLine("Get by ColorId: " + colorManager.GetByColorId(3));
+            Console.WriteLine("Color id: {0}", colorManager.GetByColorId(2).CarColorName); 
         }
 
         private static void GetCarDetailsTest()
@@ -89,6 +90,7 @@ namespace ConsoleUserInterface
             }
 
             brandManager.Delete(carBrand1);
+            Console.WriteLine("Get By Brand Id: {0} ", brandManager.GetByBrandId(2).CarBrandName); 
         }
 
         private static void CarTest()
