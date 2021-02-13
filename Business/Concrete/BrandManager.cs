@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -16,31 +18,36 @@ namespace Business.Concrete
             _ibrandDal = ibrandDal;
         }
 
-        public void Add(CarBrand carBrand)
+        public IResult Add(CarBrand carBrand)
         {
             _ibrandDal.Add(carBrand);
-            Console.WriteLine("carBrand: {0} added...",carBrand.CarBrandName);
+            return new SuccessResult(Messages.Added);
+            
         }
 
-        public void Delete(CarBrand carBrand)
-        {
-            _ibrandDal.Delete(carBrand);
-            Console.WriteLine("carBrand: {0} deleted...", carBrand.CarBrandName);
-        }
-
-        public List<CarBrand> GetAll()
-        {
-            return _ibrandDal.GetAll();
-        }
-
-        public CarBrand GetByBrandId(int brandID)
-        {
-            return _ibrandDal.Get(p => p.CarBrandId == brandID);
-        }
-
-        public void Update(CarBrand carBrand)
+        public IResult Update(CarBrand carBrand)
         {
             _ibrandDal.Update(carBrand);
+            return new SuccessResult(Messages.Updated);
         }
+
+        public IResult Delete(CarBrand carBrand)
+        {
+            _ibrandDal.Delete(carBrand);
+            return new SuccessResult(Messages.Added);
+            //Console.WriteLine("carBrand: {0} deleted...", carBrand.CarBrandName);
+        }
+
+        public IDataResult<List<CarBrand>> GetAll()
+        {
+            return new SuccessDataResult<List<CarBrand>>(_ibrandDal.GetAll(),Messages.Listed);
+        }
+
+        public IDataResult<CarBrand> GetByBrandId(int brandID)
+        {
+            return new SuccessDataResult<CarBrand>(_ibrandDal.Get(p => p.CarBrandId == brandID));
+        }
+
+
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -16,37 +18,43 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        public void Add(CarColor color)
+        public IResult Add(CarColor color)
         {
             _colorDal.Add(color);
-            Console.WriteLine("carBrand: {0} added...", color.CarColorName);
+            return new SuccessResult(Messages.Added);
+            //Console.WriteLine("carBrand: {0} added...", color.CarColorName);
         }
 
-        public void Delete(CarColor color)
-        {
-            _colorDal.Delete(color);
-            Console.WriteLine("carColor: {0} deleted...", color.CarColorName);
-        }
-
-        public void DeleteByColorId(int colorId)
-        {
-            _colorDal.DeleteByFilter(p=>p.CarColorId == colorId);
-            Console.WriteLine("carColor with Id: {0} deleted...", colorId);
-        }
-
-        public List<CarColor> GetAll()
-        {
-            return _colorDal.GetAll();
-        }
-
-        public CarColor GetByColorId(int colorId)
-        {
-            return _colorDal.Get(p=>p.CarColorId==colorId);
-        }
-
-        public void Update(CarColor color)
+        public IResult Update(CarColor color)
         {
             _colorDal.Update(color);
+            return new SuccessResult(Messages.Updated);
         }
+
+        public IResult Delete(CarColor color)
+        {
+            _colorDal.Delete(color);
+            return new SuccessResult(Messages.Deleted);
+            //Console.WriteLine("carColor: {0} deleted...", color.CarColorName);
+        }
+
+        public IResult DeleteByColorId(int colorId)
+        {
+            _colorDal.DeleteByFilter(p=>p.CarColorId == colorId);
+            return new SuccessResult(Messages.Deleted);
+            //Console.WriteLine("carColor with Id: {0} deleted...", colorId);
+        }
+
+        public IDataResult<List<CarColor>> GetAll()
+        {
+            return new SuccessDataResult<List<CarColor>>(_colorDal.GetAll(),Messages.Listed);
+        }
+
+        public IDataResult<CarColor> GetByColorId(int colorId)
+        {
+            return new SuccessDataResult<CarColor>(_colorDal.Get(p=>p.CarColorId==colorId));
+        }
+
+
     }
 }

@@ -37,6 +37,12 @@ namespace Business.Concrete
             
         }
 
+        public IResult Update(Car car)
+        {
+            _carDal.Update(car);
+            return new SuccessResult(Messages.Updated);
+        }
+
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -78,10 +84,6 @@ namespace Business.Concrete
 
         }
 
-        public IResult Update(Car car)
-        {
-            _carDal.Update(car);
-            return new SuccessResult(Messages.Updated);
-        }
+
     }
 }
