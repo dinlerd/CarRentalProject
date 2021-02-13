@@ -21,7 +21,7 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            var returnCheck = _rentalDal.GetRentalDetails(r => r.CarId == rental.CarId && r.ReturnDate == null);
+            var returnCheck = _rentalDal.GetRentalDetails(r => r.CarId == rental.CarId && r.CustomerId == rental.CustomerId && r.ReturnDate == null);
 
             if (returnCheck.Count > 0)
             {

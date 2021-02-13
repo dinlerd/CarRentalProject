@@ -35,9 +35,9 @@ namespace ConsoleUserInterface
 
             rentalManager.Update(new Rental
             {
-                Id=2006,
-                CarId = 2,
-                CustomerId = 2,
+                Id=1007,
+                CarId = 1,
+                CustomerId = 1,
                 RentDate = new DateTime(2021, 02, 10),
                 ReturnDate = DateTime.Now 
 
@@ -45,7 +45,7 @@ namespace ConsoleUserInterface
 
             rentalManager.Add(new Rental
             {
-                CarId = 2,
+                CarId = 4,
                 CustomerId = 2,
                 RentDate = new DateTime(2021, 02, 11),
                 ReturnDate = null
