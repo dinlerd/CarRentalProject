@@ -34,7 +34,7 @@ namespace Business.Concrete
         public IResult Delete(CarBrand carBrand)
         {
             _ibrandDal.Delete(carBrand);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(Messages.Deleted);
             //Console.WriteLine("carBrand: {0} deleted...", carBrand.CarBrandName);
         }
 
