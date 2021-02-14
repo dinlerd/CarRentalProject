@@ -45,9 +45,9 @@ namespace ConsoleUserInterface
 
             rentalManager.Add(new Rental
             {
-                CarId = 4,
-                CustomerId = 2,
-                RentDate = new DateTime(2021, 02, 11),
+                CarId = 3,
+                CustomerId = 1,
+                RentDate = new DateTime(2021, 02, 13),
                 ReturnDate = null
 
             });
