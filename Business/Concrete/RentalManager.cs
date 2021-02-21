@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -21,24 +22,23 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            ValidationTool.Validate(new RentalValidator(), rental);
+            //ValidationTool.Validate(new RentalValidator(), rental);
 
-            var returnCheck = _rentalDal.GetRentalDetails(r => r.CarId == rental.CarId && r.CustomerId == rental.CustomerId && r.ReturnDate == null);
+            //var returnCheck = _rentalDal.GetRentalDetails(r => r.CarId == rental.CarId && r.CustomerId == rental.CustomerId && r.ReturnDate == null);
 
-            if (returnCheck.Count > 0)
-            {
-                Console.WriteLine("Car is NOT available.");
-                return new ErrorResult(Messages.NotAdded);
+            //if (returnCheck.Count > 0)
+            //{
+            //    Console.WriteLine("Car is NOT available.");
+            //    return new ErrorResult(Messages.NotAdded);
   
-            }
-            else
-            {
+            //}
                 Console.WriteLine("Car is available.");
                 _rentalDal.Add(rental);
                 return new SuccessResult(Messages.Added);
-            }
+
 
 
         }
