@@ -75,7 +75,6 @@ namespace WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return BadRequest();
         }
 
         [HttpPost("Update")]
