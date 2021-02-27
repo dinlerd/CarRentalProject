@@ -14,3 +14,11 @@ ReturnDate date,
 foreign key (CarId) references Cars(Id),
 foreign key (CustomerId) references Customers(Id)
 );
+
+CREATE TABLE CarImages (
+Id int primary key identity(1,1),
+CarId int not null,
+ImagePath nvarchar(150),
+Date date,
+foreign key (CarId) references Cars(Id)
+);

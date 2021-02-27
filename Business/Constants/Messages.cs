@@ -15,5 +15,8 @@ namespace Business.Constants
         public static string CarNameInvalid = "Invalid Car Name, please enter more than 2 characters, " +
             "do not start with whitespace and enter dailyprice > 0";
         public static string Listed = "Listed";
+        public static string CarNotAvailable = "Car is not available";
+        public static string CarImageLimitExceeded="Car image limit exceeded; max 5 images";
+        public static string CarNotExists="Car does not exist with this id";
     }
 }

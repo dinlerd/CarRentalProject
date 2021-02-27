@@ -3,6 +3,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -27,17 +28,16 @@ namespace Business.Concrete
         {
             //ValidationTool.Validate(new RentalValidator(), rental);
 
-            //var returnCheck = _rentalDal.GetRentalDetails(r => r.CarId == rental.CarId && r.CustomerId == rental.CustomerId && r.ReturnDate == null);
+            IResult result = BusinessRules.Run(CheckIfCarAvailable(rental.CarId,rental.CustomerId));
 
-            //if (returnCheck.Count > 0)
-            //{
-            //    Console.WriteLine("Car is NOT available.");
-            //    return new ErrorResult(Messages.NotAdded);
-  
-            //}
-                Console.WriteLine("Car is available.");
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.Added);
+            if (result != null)
+            {
+                return result;
+            }
+
+            Console.WriteLine("Car is available.");
+            _rentalDal.Add(rental);
+            return new SuccessResult(Messages.Added);
 
 
 
@@ -69,6 +69,17 @@ namespace Business.Concrete
         {
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.Updated);
+        }
+
+        private IResult CheckIfCarAvailable(int carId,int customerId)
+        {
+            var result = _rentalDal.GetRentalDetails(r => r.CarId == carId && r.CustomerId == customerId && r.ReturnDate == null);
+
+            if (result.Count > 0)
+            {
+                return new ErrorResult(Messages.CarNotAvailable);
+            }
+            return new SuccessResult();
         }
     }
 }
