@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -18,5 +19,14 @@ namespace Business.Constants
         public static string CarNotAvailable = "Car is not available";
         public static string CarImageLimitExceeded="Car image limit exceeded; max 5 images";
         public static string CarNotExists="Car does not exist with this id";
+        public static string AuthorizationDenied="Authorization denied";
+        public static string UserRegistered = "Kayıt oldu";
+        public static string UserNotFound = "Kullanıcı bulunamadı";
+        public static string PasswordError = "Parola hatası";
+        public static string SuccessfulLogin = "Başarılı giriş";
+        public static string UserAlreadyExists = "Kullanıcı mevcut";
+        public static string AccessTokenCreated = "AccessToken Created";
+        public static string ClaimsListed = "Claims Listed";
+        public static string UserAdded = "User added";
     }
 }
