@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,11 +17,57 @@ namespace WebAPI.Controllers
     {
         ICarImageService _carImageService;
 
-        protected readonly string imageDirectory = @"wwwroot\CarImages";
-
         public CarImagesController(ICarImageService carImageService)
         {
             _carImageService = carImageService;
+        }
+
+        [HttpPost("add")]
+        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
+        {
+            var result = _carImageService.Add(file, carImage);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpDelete("delete")]
+        public IActionResult Delete([FromForm(Name = ("Id"))] int Id)
+        {
+
+            var carImage = _carImageService.Get(Id).Data;
+
+            var result = _carImageService.Delete(carImage);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPut("update")]
+        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, [FromForm(Name = ("Id"))] int Id)
+        {
+            var carImage = _carImageService.Get(Id).Data;
+            var result = _carImageService.Update(file, carImage);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getbyid")]
+        public IActionResult GetById([FromForm(Name = ("Id"))] int Id)
+        {
+            var result = _carImageService.Get(Id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
         [HttpGet("getall")]
@@ -31,136 +78,20 @@ namespace WebAPI.Controllers
             {
                 return Ok(result);
             }
-
             return BadRequest(result);
         }
 
-        [HttpPost("Add")]
-        public IActionResult Add(int carId, IFormFile imageFile)
+        [HttpGet("getimagesbycarid")]
+        public IActionResult GetImagesById([FromForm(Name = ("CarId"))] int carId)
         {
-            try
-            {
-                string fileName;
-                if (imageFile != null)
-                {
-                    fileName = Guid.NewGuid().ToString("N") + Path.GetExtension(imageFile.FileName);
-                }
-                    fileName = "togg.png";
-                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), imageDirectory, fileName);
-                
-                    var result = _carImageService.Add(new CarImage() 
-                    { 
-                        CarId = carId, 
-                        Date = DateTime.Now, 
-                        ImagePath = filePath 
-                    });
-
-                    if (result.Success && imageFile != null)
-                    {
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            imageFile.CopyTo(fileStream);
-                        }
-
-                        return Ok(result);
-                    }
-
-                    return BadRequest(result);
-                
-
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-        [HttpPost("Update")]
-        public IActionResult Update(int id, IFormFile imageFile)
-        {
-
-            if (imageFile != null && imageFile.Length > 0)
-            {
-                var image = _carImageService.GetById(id).Data;
-
-                string fileName = image.ImagePath;
-                string filePath = Path.Combine(Directory.GetCurrentDirectory(), imageDirectory, fileName);
-                System.IO.File.Delete(filePath);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    imageFile.CopyTo(fileStream);
-                }
-
-                image.Date = DateTime.Now;
-                var result = _carImageService.Update(image);
-                if (result.Success)
-                {
-                    return Ok(result);
-                }
-                    
-                return BadRequest(result);
-            }
-
-            return BadRequest();
-        }
-
-        [HttpPost("Delete")]
-        public IActionResult Delete(int id)
-        {
-            var image = _carImageService.GetById(id).Data;
-
-            string fileName = image.ImagePath;
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), imageDirectory, fileName);
-            System.IO.File.Delete(filePath);
-
-            var result = _carImageService.Delete(image);
+            var result = _carImageService.GetImagesByCarId(carId);
             if (result.Success)
             {
                 return Ok(result);
             }
-                
             return BadRequest(result);
         }
 
-        //[HttpPost("add")]
 
-        //public IActionResult Add(CarImage carImage)
-        //{
-        //    var result = _carImageService.Add(carImage);
-        //    if (result.Success)
-        //    {
-        //        return Ok(result);
-        //    }
-
-        //    return BadRequest(result);
-        //}
-
-        //[HttpPost("update")]
-
-        //public IActionResult Update(CarImage carImage)
-        //{
-        //    var result = _carImageService.Update(carImage);
-        //    if (result.Success)
-        //    {
-        //        return Ok(result);
-        //    }
-
-        //    return BadRequest(result);
-        //}
-
-        //[HttpPost("delete")]
-
-        //public IActionResult Delete(CarImage carImage)
-        //{
-        //    var result = _carImageService.Delete(carImage);
-        //    if (result.Success)
-        //    {
-        //        return Ok(result);
-        //    }
-
-        //    return BadRequest(result);
-        //}
     }
 }

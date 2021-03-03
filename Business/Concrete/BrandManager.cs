@@ -37,7 +37,11 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Deleted);
             //Console.WriteLine("carBrand: {0} deleted...", carBrand.CarBrandName);
         }
-
+        public IResult DeleteById(int Id)
+        {
+            _ibrandDal.DeleteByFilter(b => b.CarBrandId == Id);
+            return new SuccessResult(Messages.Deleted);
+        }
         public IDataResult<List<CarBrand>> GetAll()
         {
             return new SuccessDataResult<List<CarBrand>>(_ibrandDal.GetAll(),Messages.Listed);
