@@ -28,5 +28,6 @@ namespace Business.Constants
         public static string AccessTokenCreated = "AccessToken Created";
         public static string ClaimsListed = "Claims Listed";
         public static string UserAdded = "User added";
+        public static string AddTransactionalTest="transactionaltest added";
     }
 }

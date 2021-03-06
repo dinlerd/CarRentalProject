@@ -2,6 +2,9 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
@@ -13,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 
 namespace Business.Concrete
 {
@@ -26,6 +30,7 @@ namespace Business.Concrete
 
         [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
             //if (car.Description.Length < 2 || car.Description.StartsWith(" "))
@@ -53,24 +58,29 @@ namespace Business.Concrete
             
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
             return new SuccessResult(Messages.Updated);
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
             return new SuccessResult(Messages.Deleted);
         }
 
-
+        //[SecuredOperation("car.getall")]
+        [CacheAspect]
+        [PerformanceAspect(10)]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.Listed);
         }
 
+        [CacheAspect]
         public IDataResult<Car> GetById(int Id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(p => p.Id == Id));
@@ -100,6 +110,19 @@ namespace Business.Concrete
 
         }
 
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Car car)
+        {
+                Add(car);
+                if (car.DailyPrice < 10)
+                {
+                    throw new Exception(Messages.NotAdded);
+                }
 
+                Add(car);
+
+                return new SuccessResult(Messages.AddTransactionalTest);
+
+        }
     }
 }
