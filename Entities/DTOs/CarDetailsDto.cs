@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Entities.DTOs
 {
-    public class CarDetailDto:IDto
+    public class CarDetailsDto:IDto
     {
         public int CarId { get; set; }
         public string CarDescription { get; set; }
@@ -13,7 +13,5 @@ namespace Entities.DTOs
         public string ColorName { get; set; }
         public decimal DailyPrice { get; set; }
         public int ModelYear { get; set; }
-        public string ImagePath { get; set; }
-        public DateTime CarImageDate { get; set; }
     }
 }
