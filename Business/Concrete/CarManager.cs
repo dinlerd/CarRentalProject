@@ -10,6 +10,7 @@ using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using Entities.DTOs;
 using FluentValidation;
 using System;
@@ -23,9 +24,11 @@ namespace Business.Concrete
     public class CarManager : ICarService
     {
         ICarDal _carDal;
-        public CarManager(ICarDal carDal)
+        ICarImageService _carImageService;
+        public CarManager(ICarDal carDal, ICarImageService carImageService)
         {
             _carDal = carDal;
+            _carImageService = carImageService;
         }
 
         [SecuredOperation("product.add,admin")]
@@ -144,6 +147,24 @@ namespace Business.Concrete
         public IDataResult<List<CarDetailDto>> GetCarDetailsById(int carId)
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(car => car.Id == carId));
+        }
+
+        public IDataResult<CarDetailAndImagesDto> GetCarDetailAndImagesDto(int carId)
+        {
+            var result = _carDal.GetCarDetail(carId);
+            var imageResult = _carImageService.GetImagesByCarId(carId);
+            if (result == null || imageResult.Success == false)
+            {
+                return new ErrorDataResult<CarDetailAndImagesDto>(Messages.CarNotExists);
+            }
+
+            var carDetailAndImagesDto = new CarDetailAndImagesDto
+            {
+                Car = result,
+                CarImages = imageResult.Data
+            };
+
+            return new SuccessDataResult<CarDetailAndImagesDto>(carDetailAndImagesDto, Messages.Listed);
         }
     }
 }

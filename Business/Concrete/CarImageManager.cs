@@ -101,7 +101,7 @@ namespace Business.Concrete
         private IResult CheckImageLimitExceeded(int carid)
         {
             var carImagecount = _carImageDal.GetAll(p => p.CarId == carid).Count;
-            if (carImagecount >= 5)
+            if (carImagecount >= 20)
             {
                 return new ErrorResult(Messages.CarImageLimitExceeded);
             }
@@ -113,7 +113,7 @@ namespace Business.Concrete
         {
             try
             {
-                string path = @"\wwwroot\CarImages\togg.png";
+                string path = @"\uploads\togg.jpg";
                 var result = _carImageDal.GetAll(c => c.CarId == id).Any();
                 if (!result)
                 {
@@ -128,7 +128,7 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<CarImage>>(exception.Message);
             }
 
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(p => p.CarId == id).ToList());
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(p => p.CarId == id));
         }
 
 

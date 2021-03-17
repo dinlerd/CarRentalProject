@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Business.Abstract
         IDataResult<List<Car>> GetCarsByBrandId(int brandId);
         IDataResult<List<Car>> GetCarsByColorId(int colorId);
         IDataResult<List<CarDetailDto>> GetCarDetails();
+        IDataResult<CarDetailAndImagesDto> GetCarDetailAndImagesDto(int carId);
         IDataResult<List<CarDetailDto>> GetCarDetailsById(int carId);
         IResult AddTransactionalTest(Car car);
         IDataResult<List<CarDetailDto>> GetCarDetailsByBrandId(int brandId);

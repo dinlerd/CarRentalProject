@@ -35,11 +35,11 @@ namespace ConsoleUserInterface
 
             rentalManager.Update(new Rental
             {
-                Id=1007,
+                Id = 1007,
                 CarId = 1,
                 CustomerId = 1,
                 RentDate = new DateTime(2021, 02, 10),
-                ReturnDate = DateTime.Now 
+                ReturnDate = DateTime.Now
 
             });
 
@@ -72,10 +72,10 @@ namespace ConsoleUserInterface
                 Console.WriteLine("---------------------------");
                 Console.WriteLine("Rental Details:\n Id: {0}\n CarId: {1}\n CarName: {2}\n " +
                     "CustomerId: {3}\n CustomerName: {4}\n CompanyName: {5}\n RentDate: {6}\n ReturnDate: {7}",
-                    detail.Id,detail.CarId,detail.CarName,detail.CustomerId,
-                    detail.CustomerName,detail.CompanyName,detail.RentDate,detail.ReturnDate);
+                    detail.Id, detail.CarId, detail.CarName, detail.CustomerId,
+                    detail.CustomerName, detail.CompanyName, detail.RentDate, detail.ReturnDate);
             }
-            
+
         }
 
         private static void CustomerTest()
@@ -122,7 +122,7 @@ namespace ConsoleUserInterface
             {
                 foreach (var user in result.Data)
                 {
-                    Console.WriteLine("User: {0} {1}   UserId: {2} ", user.FirstName, user.LastName,user.Id);
+                    Console.WriteLine("User: {0} {1}   UserId: {2} ", user.FirstName, user.LastName, user.Id);
                 }
 
             }
@@ -152,77 +152,77 @@ namespace ConsoleUserInterface
                 Console.WriteLine("Color Id: " + color.CarColorId + " Color Name: " + color.CarColorName);
             }
             //Console.WriteLine("Get by ColorId: " + colorManager.GetByColorId(3));
-            Console.WriteLine("Color id: {0}", colorManager.GetByColorId(2).Data.CarColorId); 
+            Console.WriteLine("Color id: {0}", colorManager.GetByColorId(2).Data.CarColorId);
         }
 
-        private static void GetCarDetailsTest()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
+        //private static void GetCarDetailsTest()
+        //{
+        //    CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetCarDetails().Data)
-            {
-                Console.WriteLine(car.CarDescription + " / " + car.BrandName + " / " + car.ColorName + " / " + car.DailyPrice);
-            }
-        }
+        //    foreach (var car in carManager.GetCarDetails().Data)
+        //    {
+        //        Console.WriteLine(car.CarDescription + " / " + car.BrandName + " / " + car.ColorName + " / " + car.DailyPrice);
+        //    }
+        //}
 
-        private static void InMemoryTest()
-        {
-            CarManager productService = new CarManager(new InMemoryCarDal(new List<Car>{
-                new Car{Id=1,BrandId=1,ColorId=3,ModelYear=2019,DailyPrice=50,Description="Volvo S40 2019 2000CC"},
-                new Car{Id=2,BrandId=1,ColorId=4,ModelYear=2020,DailyPrice=80,Description="Volvo S80 2020 3000CC"},
-                new Car{Id=3,BrandId=3,ColorId=2,ModelYear=2021,DailyPrice=100,Description="BMW 5.20 2021 2000CC" }
-            }));
+        //private static void InMemoryTest()
+        //{
+        //    CarManager productService = new CarManager(new InMemoryCarDal(new List<Car>{
+        //        new Car{Id=1,BrandId=1,ColorId=3,ModelYear=2019,DailyPrice=50,Description="Volvo S40 2019 2000CC"},
+        //        new Car{Id=2,BrandId=1,ColorId=4,ModelYear=2020,DailyPrice=80,Description="Volvo S80 2020 3000CC"},
+        //        new Car{Id=3,BrandId=3,ColorId=2,ModelYear=2021,DailyPrice=100,Description="BMW 5.20 2021 2000CC" }
+        //    }));
 
-            productService.ListAll();
+        //    productService.ListAll();
 
-            Car car1 = new Car() { Id = 4, BrandId = 4, ColorId = 5, ModelYear = 2018, DailyPrice = 170, Description = "Opel Astra 2018 1.6 CDTI" };
-            productService.Add(car1);
+        //    Car car1 = new Car() { Id = 4, BrandId = 4, ColorId = 5, ModelYear = 2018, DailyPrice = 170, Description = "Opel Astra 2018 1.6 CDTI" };
+        //    productService.Add(car1);
 
-            foreach (var car in productService.GetAll().Data)
-            {
-                Console.WriteLine("Car GetById: " + car.Description);
-            }
+        //    foreach (var car in productService.GetAll().Data)
+        //    {
+        //        Console.WriteLine("Car GetById: " + car.Description);
+        //    }
 
-            Console.WriteLine("List all cars: ");
-            productService.ListAll();
-        }
+        //    Console.WriteLine("List all cars: ");
+        //    productService.ListAll();
+        //}
 
-        private static void CarBrandTest()
-        {
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-            CarBrand carBrand1 = new CarBrand() { CarBrandName = "OPEL" };
-            brandManager.Add(carBrand1);
+        //private static void CarBrandTest()
+        //{
+        //    BrandManager brandManager = new BrandManager(new EfBrandDal());
+        //    CarBrand carBrand1 = new CarBrand() { CarBrandName = "OPEL" };
+        //    brandManager.Add(carBrand1);
 
-            foreach (var brand in brandManager.GetAll().Data)
-            {
-                Console.WriteLine("{0} / {1} ", brand.CarBrandId, brand.CarBrandName);
-            }
+        //    foreach (var brand in brandManager.GetAll().Data)
+        //    {
+        //        Console.WriteLine("{0} / {1} ", brand.CarBrandId, brand.CarBrandName);
+        //    }
 
-            brandManager.Delete(carBrand1);
-            Console.WriteLine("Get By Brand Id: {0} ", brandManager.GetByBrandId(2).Data.CarBrandName); 
-        }
+        //    brandManager.Delete(carBrand1);
+        //    Console.WriteLine("Get By Brand Id: {0} ", brandManager.GetByBrandId(2).Data.CarBrandName);
+        //}
 
-        private static void CarTest()
-        {
-            CarManager carService = new CarManager(new EfCarDal());
-            Car car1 = new Car() { BrandId = 1003, ColorId = 3, ModelYear = 2017, DailyPrice = 10000, Description = "Opel Corsa 1.3 CDTI" };
-            carService.Add(car1);
-            //carService.Delete(car1);
+        //private static void CarTest()
+        //{
+        //    CarManager carService = new CarManager(new EfCarDal());
+        //    Car car1 = new Car() { BrandId = 1003, ColorId = 3, ModelYear = 2017, DailyPrice = 10000, Description = "Opel Corsa 1.3 CDTI" };
+        //    carService.Add(car1);
+        //    //carService.Delete(car1);
 
 
-            Console.WriteLine("------------------------");
-            Console.WriteLine("All Cars: ");
-            foreach (var car in carService.GetAll().Data)
-            {
-                Console.WriteLine(car.Description);
-            }
-            Console.WriteLine("------------------------");
-            Console.WriteLine("Cars ByBrandId: ");
-            foreach (var car in carService.GetCarsByBrandId(2).Data)
-            {
-                Console.WriteLine(car.Description);
-            }
-            carService.Delete(car1);
-        }
+        //    Console.WriteLine("------------------------");
+        //    Console.WriteLine("All Cars: ");
+        //    foreach (var car in carService.GetAll().Data)
+        //    {
+        //        Console.WriteLine(car.Description);
+        //    }
+        //    Console.WriteLine("------------------------");
+        //    Console.WriteLine("Cars ByBrandId: ");
+        //    foreach (var car in carService.GetCarsByBrandId(2).Data)
+        //    {
+        //        Console.WriteLine(car.Description);
+        //    }
+        //    carService.Delete(car1);
+        //}
     }
 }

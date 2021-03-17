@@ -96,7 +96,7 @@ namespace WebAPI
             //});
             app.UseHttpsRedirection();
 
-            //app.UseStaticFiles();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
