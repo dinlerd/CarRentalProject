@@ -37,11 +37,14 @@ namespace Business.Concrete
             }
             if(file == null)
             {
-                carImage.ImagePath = @"\wwwroot\CarImages\togg.png";
+                carImage.ImagePath = @"\uploads\togg.jpg";
             }
             else
             {
-                carImage.ImagePath = FileHelper.Add(file);
+                string[] path = FileHelper.Add(file).Split('\\');
+                string newImagePath = path[path.Length - 2].ToString();
+                newImagePath = "/" + newImagePath + "/" + path[path.Length - 1].ToString();
+                carImage.ImagePath = newImagePath;
             }
 
             carImage.Date = DateTime.Now;
