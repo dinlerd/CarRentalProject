@@ -32,10 +32,33 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("getallbycarid")]
+        public IActionResult GetAllByCarId(int carId)
+        {
+            var result = _rentalService.GetAllByCarId(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet("getrentaldetails")]
         public IActionResult GetRentalDetails()
         {
             var result = _rentalService.GetRentalDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpGet("getrentaldetailsbycarid")]
+        public IActionResult GetRentalDetailsByCarId(int carId)
+        {
+            var result = _rentalService.GetRentalDetailsByCarId(carId);
             if (result.Success)
             {
                 return Ok(result);
@@ -95,5 +118,6 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
     }
 }
