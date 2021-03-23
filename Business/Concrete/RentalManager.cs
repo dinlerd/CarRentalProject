@@ -38,9 +38,6 @@ namespace Business.Concrete
             Console.WriteLine("Car is available.");
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.Added);
-
-
-
         }
 
         public IResult Delete(Rental rental)
