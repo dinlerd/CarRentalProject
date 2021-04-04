@@ -1,38 +1,21 @@
-CarRentalProject
-Frontend With Angular
-Used Technologies
-•	Angular 11
-•	TypeScript
-•	JavaScript
-•	HTML5
-•	Bootstrap 5.0
-•	JQuery
-Backend With C#
-Used Technologies
-•	.Net Core 3.1
-•	Restful API
-•	Result Types
-•	Interceptor
-•	Autofac
-o	IoC Containers
-o	AOP (Aspect Oriented Programming)
-	Caching
-	Performance
-	Transaction
-	Validation
-•	Fluent Validation
-•	Cache Management
-•	JWT Authentication
-•	Repository Design Pattern
-•	Cross Cutting Concerns
-o	Caching
-o	Validation
-•	Extensions
-o	Claim
-	Claim Principal
-o	Exception Middleware
-o	Service Collection
-o	Error Handling
-	Error Details
-	Validation Error Details
+![ReadMe](https://user-images.githubusercontent.com/74870868/113514766-36542e00-9579-11eb-8a58-cde0a028f88b.PNG)
 
+![Capture](https://user-images.githubusercontent.com/74870868/113514768-3b18e200-9579-11eb-8755-5fbfb3fbda38.PNG)
+![Capture2](https://user-images.githubusercontent.com/74870868/113514769-3bb17880-9579-11eb-8968-d77ca1235fd5.PNG)
+![Capture2_21](https://user-images.githubusercontent.com/74870868/113514770-3bb17880-9579-11eb-9d02-b6edf716c1ed.PNG)
+![Capture2_22](https://user-images.githubusercontent.com/74870868/113514771-3d7b3c00-9579-11eb-8696-0083f4e2962a.PNG)
+![Capture3](https://user-images.githubusercontent.com/74870868/113514772-3e13d280-9579-11eb-8c2c-d521896892df.PNG)
+![Capture4](https://user-images.githubusercontent.com/74870868/113514774-3eac6900-9579-11eb-817d-c362906734fb.PNG)
+![Capture5](https://user-images.githubusercontent.com/74870868/113514776-3eac6900-9579-11eb-85b4-2f2639368445.PNG)
+![Capture6](https://user-images.githubusercontent.com/74870868/113514777-3f44ff80-9579-11eb-8507-e09dd890b5c4.PNG)
+![Capture7](https://user-images.githubusercontent.com/74870868/113514779-3f44ff80-9579-11eb-9cd5-89dc8924ff44.PNG)
+![Capture8](https://user-images.githubusercontent.com/74870868/113514780-3f44ff80-9579-11eb-83bd-4501e96b8d84.PNG)
+![Capture9](https://user-images.githubusercontent.com/74870868/113514781-3fdd9600-9579-11eb-9e93-3f6322164871.PNG)
+![Capture10](https://user-images.githubusercontent.com/74870868/113514782-40762c80-9579-11eb-97b7-74d7f98858f6.PNG)
+![Capture11](https://user-images.githubusercontent.com/74870868/113514784-40762c80-9579-11eb-8ef8-454bbf770c62.PNG)
+![Capture12](https://user-images.githubusercontent.com/74870868/113514785-410ec300-9579-11eb-9ad9-e4e8631fad84.PNG)
+![Capture13](https://user-images.githubusercontent.com/74870868/113514786-410ec300-9579-11eb-8aed-293509babf2c.PNG)
+![Capture14](https://user-images.githubusercontent.com/74870868/113514788-41a75980-9579-11eb-90b3-a83c898aa2a0.PNG)
+![Capture15](https://user-images.githubusercontent.com/74870868/113514789-41a75980-9579-11eb-8699-6b64a6c74366.PNG)
+![Capture16](https://user-images.githubusercontent.com/74870868/113514790-41a75980-9579-11eb-9b1c-c6aa38e8d735.PNG)
+![Capture17](https://user-images.githubusercontent.com/74870868/113514791-423ff000-9579-11eb-9c6e-126d874d2847.PNG)
