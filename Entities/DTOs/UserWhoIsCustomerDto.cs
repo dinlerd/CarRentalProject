@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Entities.Concrete
+namespace Entities.DTOs
 {
-    public class Customer:IEntity
+    public class UserWhoIsCustomerDto : IDto
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
+        public string email { get; set; }
+        public int userId { get; set; }
+        public int customerId { get; set; }
         public string CompanyName { get; set; }
         public int FindeksScore { get; set; }
-
     }
 }

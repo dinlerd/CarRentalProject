@@ -15,5 +15,6 @@ namespace Entities.DTOs
         public int ModelYear { get; set; }
         public string ImagePath { get; set; }
         public DateTime CarImageDate { get; set; }
+        public int MinFindeksScore { get; set; }
     }
 }

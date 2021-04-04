@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -42,9 +45,47 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll(),Messages.Listed);
         }
 
+        [CacheAspect]
+        [PerformanceAspect(5)]
+        public IDataResult<User> GetById(int userId)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Id == userId));
+        }
+
+
+        public IDataResult<User> GetByEmail(string email)
+        {
+            User user = _userDal.Get(u => u.Email.ToLower() == email.ToLower());
+
+            if (user == null)
+            {
+                return new ErrorDataResult<User>(Messages.NotListed);
+            }
+            else
+            {
+                return new SuccessDataResult<User>(user, Messages.Listed);
+            }
+        }
+
         public IResult Update(User user)
         {
             _userDal.Update(user);
+            return new SuccessResult(Messages.Updated);
+        }
+
+        //[SecuredOperation("admin,user.updateinfos")]
+        //[ValidationAspect(typeof(UserValidator))]
+        //[CacheRemoveAspect("IUserService.Get")]
+        public IResult UpdateSpecificInfos(User user)
+        {
+            User userInfos = GetById(user.Id).Data;
+
+            userInfos.FirstName = user.FirstName;
+            userInfos.LastName = user.LastName;
+            userInfos.Email = user.Email;
+
+            _userDal.Update(userInfos);
+
             return new SuccessResult(Messages.Updated);
         }
 

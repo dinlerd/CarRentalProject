@@ -18,8 +18,9 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from r in filter is null ? context.Rentals : context.Rentals.Where(filter)
                              join c in context.Cars on r.CarId equals c.Id
-                             join u in context.Users on r.CustomerId equals u.Id
-                             join cu in context.Customers on u.Id equals cu.UserId
+                             join cu in context.Customers on r.CustomerId equals cu.Id
+                             join u in context.Users on cu.UserId equals u.Id
+                             //join cu in context.Customers on u.Id equals cu.UserId
                              join br in context.Brands on c.BrandId equals br.CarBrandId
                              join cl in context.Colors on c.ColorId equals cl.CarColorId
                              select new RentalDetailDto {
@@ -37,6 +38,22 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.ToList();
 
             }
+        }
+
+        public FindeksScoreDto GetFindeksScores(int carId, int customerId)
+        {
+            using (CarContext context = new CarContext())
+            {
+                var result = from c in context.Cars.Where(c => c.Id == carId)
+                             from cu in context.Customers.Where(cu => cu.Id == customerId)
+                             select new FindeksScoreDto
+                             {
+                                 CarMinFindeksScore = c.MinFindeksScore,
+                                 CustomerFindeksScore = cu.FindeksScore,
+                             };
+
+                return result.SingleOrDefault();
+            };
         }
     }
 }

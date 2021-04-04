@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Business;
@@ -28,7 +30,7 @@ namespace Business.Concrete
         {
             //ValidationTool.Validate(new RentalValidator(), rental);
 
-            IResult result = BusinessRules.Run(CheckIfCarAvailable(rental.CarId,rental.CustomerId));
+            IResult result = BusinessRules.Run(CheckIfCarAvailable(rental.CarId,rental.CustomerId), FindeksScoreAvailabilityCheck(rental));
 
             if (result != null)
             {
@@ -71,6 +73,24 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails(r => r.CarId == carId), Messages.Listed);
         }
 
+        [CacheAspect]
+        [PerformanceAspect(5)]
+        public IDataResult<Rental> GetById(int rentalId)
+        {
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId));
+        }
+
+
+        [CacheAspect]
+        [PerformanceAspect(5)]
+        public IDataResult<Rental> GetIdByRentalInfos(int carId, int customerId, DateTime rentDate, DateTime returnDate)
+        {
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.CarId == carId
+                                                                && r.CustomerId == customerId
+                                                                && r.RentDate == rentDate
+                                                                && r.ReturnDate == returnDate));
+        }
+
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
@@ -86,6 +106,20 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.CarNotAvailable);
             }
             return new SuccessResult();
+        }
+
+        private IResult FindeksScoreAvailabilityCheck(Rental rental)
+        {
+            var result = _rentalDal.GetFindeksScores(rental.CarId, rental.CustomerId);
+
+            if (result.CarMinFindeksScore <= result.CustomerFindeksScore)
+            {
+                return new SuccessResult();
+            }
+            else
+            {
+                return new ErrorResult(Messages.FindeksScoreIsNotEnough);
+            }
         }
     }
 }

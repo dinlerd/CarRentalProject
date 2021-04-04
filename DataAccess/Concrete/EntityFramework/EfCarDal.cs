@@ -32,6 +32,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ColorName = cc.CarColorName,
                                  DailyPrice = c.DailyPrice,
                                  ModelYear = c.ModelYear,
+                                 MinFindeksScore = c.MinFindeksScore,
                                  ImagePath = carimage.ImagePath,
                                  CarImageDate = carimage.Date
                              };
@@ -57,6 +58,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ColorName = cc.CarColorName,
                                  DailyPrice = c.DailyPrice,
                                  ModelYear = c.ModelYear,
+                                 MinFindeksScore = c.MinFindeksScore
                              };
                 return result.SingleOrDefault();
             }
