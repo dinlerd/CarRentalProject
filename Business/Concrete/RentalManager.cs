@@ -19,10 +19,12 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
+        ICustomerService _customerService;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICustomerService customerService)
         {
             _rentalDal = rentalDal;
+            _customerService = customerService;
         }
 
         [ValidationAspect(typeof(RentalValidator))]
@@ -37,6 +39,7 @@ namespace Business.Concrete
                 return result;
             }
 
+            IncreaseCustomerFindeks(rental);
             Console.WriteLine("Car is available.");
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.Added);
@@ -120,6 +123,17 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.FindeksScoreIsNotEnough);
             }
+        }
+
+        private void IncreaseCustomerFindeks(Rental rental)
+        {
+            var customer = _customerService.GetById(rental.CustomerId).Data;
+            if (customer.FindeksScore < 1900)
+            {
+                customer.FindeksScore = customer.FindeksScore + 10;
+                _customerService.Update(customer);
+            }
+
         }
     }
 }
