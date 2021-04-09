@@ -11,6 +11,7 @@ namespace Business.Abstract
     public interface ICarService
     {
         IResult Add(Car car);
+        IDataResult<Car> AddCar(Car car);
         IResult Delete(Car car);
         IResult DeleteById(int Id);
         IResult Update(Car car);

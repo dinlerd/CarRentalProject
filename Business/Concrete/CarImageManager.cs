@@ -37,7 +37,7 @@ namespace Business.Concrete
             }
             if(file == null)
             {
-                carImage.ImagePath = @"\uploads\togg.jpg";
+                carImage.ImagePath = @"/uploads/togg.jpg";
             }
             else
             {

@@ -62,6 +62,17 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("ICarService.Get")]
+        //[SecuredOperation("product.add,admin")]
+        [ValidationAspect(typeof(CarValidator))]
+        public IDataResult<Car> AddCar(Car car)
+        {
+            Random value = new Random();
+            car.MinFindeksScore = value.Next(0, 1901);
+            _carDal.Add(car);
+            return new SuccessDataResult<Car>(car, Messages.Added);
+        }
+
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
